@@ -3,7 +3,7 @@
 # Standard library imports
 
 # Remote library imports
-from flask import request, make_response
+from flask import request, make_response, session
 from flask_restful import Resource
 
 # Local imports
@@ -81,7 +81,7 @@ class Purchases(Resource):
             db.session.add(new_purchase)
             db.session.commit()
             new_purchase_dict = new_purchase.to_dict()
-            return make_response(new_purchase_dict, 200)
+            return make_response(new_purchase_dict, 201)
         except:
             response_body = {'errors': ['validation errors']}
             return make_response(response_body, 400)
@@ -104,6 +104,44 @@ class PurchasesByID(Resource):
             return make_response(response_body, 404)
 
 api.add_resource(PurchasesByID, '/purchases/<int:id>')
+
+class SignUp(Resource):
+
+    def post(self):
+        try:
+            data = request.get_json()
+            user = User(
+                username = data['username'],
+                password = data['password'],
+                full_name = data['full_name'],
+                profile_pic =data['profile_pic'],
+                address = data['address'],
+                city = data['city'],
+                state = data['state']
+            )
+            db.session.add(user)
+            db.session.commit()
+            user_dict = user.to_dict()
+            return make_response(user_dict, 201)
+        except:
+            response_body = {'errors': ['validation errors']}
+            return make_response(response_body, 400)
+
+api.add_resource(SignUp, '/signup')
+
+class CheckSession(Resource):
+
+    def get(self):
+
+        user_id = session['user_id']
+
+        if user_id:
+            user = User.query.filter(User.id == user_id).first()
+            user_dict = user.to_dict()
+            return make_response(user_dict, 200)
+        
+        return {}, 204
+
 
 
 
