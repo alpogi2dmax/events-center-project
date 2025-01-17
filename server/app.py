@@ -88,6 +88,24 @@ class Purchases(Resource):
 
 api.add_resource(Purchases, '/purchases')
 
+class PurchasesByID(Resource):
+
+    def delete(self, id):
+
+        purchase = Purchase.query.filter_by(id=id).first()
+
+        if purchase:
+            db.session.delete(purchase)
+            db.session.commit()
+            response_body = ''
+            return make_response(response_body, 204)
+        else:
+            response_body = {'error': 'Purchase not found'}
+            return make_response(response_body, 404)
+
+api.add_resource(PurchasesByID, '/purchases/<int:id>')
+
+
 
 
 
