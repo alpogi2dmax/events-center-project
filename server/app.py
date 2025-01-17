@@ -50,6 +50,21 @@ class Events(Resource):
     
 api.add_resource(Events, '/events')
 
+class EventsByID(Resource):
+
+    def get(self, id):
+
+        event = Event.query.filter_by(id=id).first()
+        if event:
+            event_dict = event.to_dict()
+            return make_response(event_dict, 200)
+        else:
+            response_body = {'error': 'Event not found'}
+            return make_response(response_body, 200)
+        
+api.add_resource(EventsByID, '/events/<int:id>')
+
+
 
 
 if __name__ == '__main__':
