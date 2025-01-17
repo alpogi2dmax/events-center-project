@@ -19,10 +19,10 @@ class User(db.Model, SerializerMixin):
 
     #Add relationships
     purchases = db.Relationship(
-        'Purchases', back_populates='user', cascase='all, delete-orphan')
+        'Purchase', back_populates='user', cascade='all, delete-orphan')
     
     # Add serialization rules
-    serialize_rules = ('purchases.user',)
+    serialize_rules = ('-purchases.user',)
 
 class Event(db.Model, SerializerMixin):
     __tablename__ = 'events'
@@ -33,15 +33,15 @@ class Event(db.Model, SerializerMixin):
     venue = db.Column(db.String)
     city = db.Column(db.String)
     state = db.Column(db.String)
-    date = db.Column(db.Datetime)
+    date = db.Column(db.DateTime)
     price = db.Column(db.Float)
     
     #Add relationships
     purchases = db.Relationship(
-        'Purchases', back_populates='event', cascase='all, delete-orphan')
+        'Purchase', back_populates='event', cascade='all, delete-orphan')
     
     # Add serialization rules
-    serialize_rules = ('purchases.event',)
+    serialize_rules = ('-purchases.event',)
 
 class Purchase(db.Model, SerializerMixin):
     __tablename__ = 'purchases'
