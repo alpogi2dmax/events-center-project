@@ -41,6 +41,16 @@ class UsersByID(Resource):
 
 api.add_resource(UsersByID, '/users/<int:id>')
 
+class Events(Resource):
+
+    def get(self):
+
+        events = [events.to_dict() for events in Event.query.all()]
+        return make_response(events, 200) 
+    
+api.add_resource(Events, '/events')
+
+
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
