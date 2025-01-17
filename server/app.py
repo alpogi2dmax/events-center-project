@@ -64,6 +64,31 @@ class EventsByID(Resource):
         
 api.add_resource(EventsByID, '/events/<int:id>')
 
+class Purchases(Resource):
+
+    def post(self):
+
+        try:
+            data = request.get_json()
+
+            new_purchase = Purchase(
+                name = data['name'],
+                number_tickets = data['number_tickets'],
+                user_id = data['user_id'],
+                event_id = data['event_id']
+            )
+
+            db.session.add(new_purchase)
+            db.session.commit()
+            new_purchase_dict = new_purchase.to_dict()
+            return make_response(new_purchase_dict, 200)
+        except:
+            response_body = {'errors': ['validation errors']}
+            return make_response(response_body, 400)
+
+api.add_resource(Purchases, '/purchases')
+
+
 
 
 
