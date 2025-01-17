@@ -163,8 +163,14 @@ class Login(Resource):
         
 api.add_resource(Login, '/login')
         
+class Logout(Resource):
 
+    def delete(self):
 
+        session['user_id'] = None
+        return {}, 204
+
+api.add_resource(Logout, '/logout') 
 
 
 
