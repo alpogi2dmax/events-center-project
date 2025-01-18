@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import LoginForm from './LoginForm';
+import SignUpForm from './SignUpForm';
 
 function Login({onLogin}) {
 
@@ -24,15 +25,14 @@ function Login({onLogin}) {
                 </>   
             ) : (
                 <>
-                    <p>TEST</p>
-                    {/* <SignUpForm onLogin={onLogin} />
-                    <Divider />
+                    <SignUpForm onLogin={onLogin} />
+                    <br></br>
                     <p>
                         Already have an account? &nbsp;
-                        <Button onClick={() => setShowLogin(true)}>
+                        <button onClick={() => setShowLogin(true)}>
                             Log In
-                        </Button>
-                    </p> */}
+                        </button>
+                    </p>
                 </>
             )}
         </div>
