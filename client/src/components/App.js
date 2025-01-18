@@ -33,7 +33,7 @@ function App() {
       <main>
         <Switch>
           <Route path='/'>
-            <EventList />
+            <EventList user={user}/>
           </Route>
         </Switch>
       </main>
