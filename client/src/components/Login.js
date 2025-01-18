@@ -8,7 +8,7 @@ function Login({onLogin}) {
     const [showLogin, setShowLogin] = useState(true)
     
     return (
-        <div>
+        <div className='logincss'>
             <h1 className='headercss'>
                 Events Center
             </h1>

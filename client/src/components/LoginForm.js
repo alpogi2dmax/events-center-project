@@ -18,11 +18,21 @@ function LoginForm({onLogin}) {
             if (r.ok) {
                 r.json().then((user) => onLogin(user));
             } else {
-                r.json().then((err) => {
-                    console.log(err);
-                    setErrors([err.error]);
-                })}
-        })
+                // Check if response has content before parsing
+                if (r.headers.get('content-length') > 0) {
+                    r.json().then((err) => {
+                        console.log(err);
+                        setErrors([err.error]);
+                    });
+                } else {
+                    // Handle cases where there's no response body
+                    console.error("No response body");
+                    setErrors(["An unexpected error occurred"]);
+                }
+        }}).catch((error) => {
+            console.error("Fetch error:", error);
+            setErrors(["Network error"]);
+        });
     }
 
     return (

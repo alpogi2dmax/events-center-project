@@ -1,5 +1,6 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
+import './App.css';
 
 function Header({user, setUser}) {
 
@@ -12,14 +13,18 @@ function Header({user, setUser}) {
     }
 
     return (
-        <div>
-            <header>
-                <h1 className='headercss'>
+        <div className='logincss'>
+            <header className='headercss'>
+                <h1>
                     Events Center
                 </h1>
-                <p>Welcome, {user.full_name}</p>
             </header>
-            <button onClick={handleLogOutClick}>Logout</button>
+            <nav className='navbar'>
+                <h3 className='nav-link'>Welcome, {user.full_name}</h3>
+                <Link className='nav-link' to='/'>Events List</Link>
+                <button className='nav-link' onClick={handleLogOutClick}>Logout</button>
+            </nav>
+                
         </div>
     )
 }

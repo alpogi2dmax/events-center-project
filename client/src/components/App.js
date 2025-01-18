@@ -13,18 +13,30 @@ function App() {
     fetch('/checksession')
     .then((r) => {
       if (r.ok) {
-        r.json()
-        .then((user) => setUser(user));
+        if (r.headers.get('content-length') > 0) {
+          r.json()
+          .then((user) => setUser(user))
+          .catch((error) => console.error("JSON parsing error:", error));
+        } else {
+          console.warn("No content returned from /checksession");
+        }
       }
-    });
-  }, []);
+    })
+    .catch((error) => console.error("Fetch error:", error));
+}, []);
 
   if (!user) return <Login onLogin={setUser} />
 
   return (
     <div>
       <Header user={user} setUser={setUser}/>
-      <EventList/>
+      <main>
+        <Switch>
+          <Route path='/'>
+            <EventList />
+          </Route>
+        </Switch>
+      </main>
     </div>
   )
 

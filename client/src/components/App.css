@@ -1,11 +1,57 @@
+.logincss {
+    font-family: Arial, Helvetica, sans-serif;
+    position: relative;
+    padding: 10px
+}
+
 .headercss {
     color:rgb(13, 13, 170);
     font-family: Arial, Helvetica, sans-serif;
+    padding: 10px
 }
 
-.login-button {
-    float: right;
+.profilepic {
+    height:100px;
+    width: auto;
+    float: left;
+    padding: 10px
 }
+
+.welcome {
+    position: relative
+}
+
+.welcomecard::after {
+    content: "";
+    clear: both;
+    display: table;
+    margin: 0em;
+    padding: 10px;
+}
+
+.welcomebox {
+    float: left;
+    padding: 10px
+}
+
+.navbar {
+    justify-content: center;
+    background-color: rgb(6, 6, 185);
+  }
+
+.nav-link{
+    display: inline-block;
+    box-sizing: border-box;
+    width: 300px;
+    padding: 5px;
+    margin: 6px 6px 6px;
+    background: rgb(3, 16, 94);
+    text-decoration: none;
+    text-align: center;
+    font-size: min(10vw, 20px) ;
+    color: white;
+}
+
 
 .list {
     height: 150px;
