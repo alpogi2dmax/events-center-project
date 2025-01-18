@@ -1,26 +1,30 @@
-import React, { useEffect, useState } from "react";
+
 import { Switch, Route } from "react-router-dom";
 import EventList from './EventList'
+import Header from'./Header'
+import Login from './Login'
+import { useState, useEffect } from "react";
 
 function App() {
-  
 
-  const [events, setEvents] = useState([])
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    fetch('/events')
-    .then(r => r.json())
-    .then(data => setEvents(data))
-  }, [])
+    fetch('/checksession')
+    .then((r) => {
+      if (r.ok) {
+        r.json()
+        .then((user) => setUser(user));
+      }
+    });
+  }, []);
 
-  console.log(events)
+  if (!user) return <Login onLogin={setUser} />
 
   return (
     <div>
-      <header>
-        <h1>Events Center</h1>
-      </header>
-      <EventList events={events}/>
+      <Header user={user} setUser={setUser}/>
+      <EventList/>
     </div>
   )
 

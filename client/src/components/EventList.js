@@ -1,9 +1,17 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
 import EventCard from './EventCard'
 
-function EventList({events}) {
+function EventList() {
 
-    console.log(events)
+    const [events, setEvents] = useState([])
+    
+      useEffect(() => {
+        fetch('/events')
+        .then(r => r.json())
+        .then(data => setEvents(data))
+      }, [])
+    
+      console.log(events)
 
     return (
         <div className='list'>
