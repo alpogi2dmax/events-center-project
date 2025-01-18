@@ -27,13 +27,13 @@ if __name__ == '__main__':
 
         print('Seeding users...')
         users = []
-        users.append(User(username = 'lebronjames', password = 'p@ssw0rd', full_name = 'Lebron James', profile_pic = 'image', address = '9955 W Beverly Grove Dr', city = 'Beverly Hills', state = 'CA'))
-        users.append(User(username = 'conanobrien', password = 'p@ssw0rd', full_name = 'Conan OBrien', profile_pic = 'image', address = '1253 Amalfi Dr', city = 'Los Angeles', state = 'CA'))
+        users.append(User(username = 'lebronjames', password = 'p@ssw0rd', full_name = 'Lebron James', profile_pic = './images/lebronjames.png', address = '9955 W Beverly Grove Dr', city = 'Beverly Hills', state = 'CA'))
+        users.append(User(username = 'conanobrien', password = 'p@ssw0rd', full_name = 'Conan OBrien', profile_pic = 'images/conanobrien.png', address = '1253 Amalfi Dr', city = 'Los Angeles', state = 'CA'))
 
         print('Seeding events...')
         events = []
-        events.append(Event(name = 'Mary J Blige', image = 'image', venue = 'Intuit Dome', city = 'Inglewood', state = 'CA', date = datetime.strptime('03/01/2025', '%m/%d/%Y'), price = 123))
-        events.append(Event(name = 'J Balvin', image = 'image', venue = 'Kia Forum', city = 'Inglewood', state = 'CA', date = datetime.strptime('05/09/2025', '%m/%d/%Y'), price = 123))
+        events.append(Event(name = 'Mary J Blige', image = './images/maryjblige.png', venue = 'Intuit Dome', city = 'Inglewood', state = 'CA', date = datetime.strptime('03/01/2025', '%m/%d/%Y'), price = 123))
+        events.append(Event(name = 'J Balvin', image = './images/jbalvin.png', venue = 'Kia Forum', city = 'Inglewood', state = 'CA', date = datetime.strptime('05/09/2025', '%m/%d/%Y'), price = 123))
 
         print('Seeding purchases...')
         purchases = []

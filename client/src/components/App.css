@@ -1,0 +1,43 @@
+.list {
+    height: 150px;
+    width: 100%;
+    position: relative;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.card::after {
+    content: "";
+    clear: both;
+    display: table;
+    margin: 0em;
+    padding: 10px;
+    
+}
+
+.box {
+    float: left;
+    padding: 10px;
+}
+
+.box:nth-child(1) {
+    float: left
+  }
+
+.box:nth-child(2) {
+    float: left
+}
+
+.box:nth-child(3) {
+    float: left
+}
+
+p {
+    margin-top: 1em;
+    margin-bottom:1em;
+}
+
+.image {
+    height: 150px;
+    width: 300px;
+}
+
