@@ -18,8 +18,10 @@ function LoginForm({onLogin}) {
             if (r.ok) {
                 r.json().then((user) => onLogin(user));
             } else {
-                r.json().then((err) => setErrors(err.errors));
-            }
+                r.json().then((err) => {
+                    console.log(err);
+                    setErrors([err.error]);
+                })}
         })
     }
 
@@ -33,9 +35,9 @@ function LoginForm({onLogin}) {
             <input type="text" id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
             <br></br>
             <input type="submit" value="Login"/>
-            {/* {errors.map((err) => (
-                <p>{err}</p>
-            ))} */}
+            {errors.map((err) => (
+                <p key={err}>{err}</p>
+        ))}
         </form>
     )
 }
