@@ -36,13 +36,19 @@ function App() {
     setPurchases([...purchases, purchase])
   }
 
+  function deletePurchase(deletedPurchase) {
+    setPurchases(purchases.filter((purchase) => purchase.id !== deletedPurchase.id))
+  }
+
+  console.log(purchases)
+
   return (
     <div>
       <Header user={user} setUser={setUser}/>
       <main>
         <Switch>
         <Route path='/mylist'>
-            <MyList purchases={purchases}/>
+            <MyList purchases={purchases} onDeletePurchase={deletePurchase}/>
           </Route>
           <Route path='/'>
             <EventList user={user} onAddPurchase={addPurchase} />

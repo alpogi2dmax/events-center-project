@@ -9,21 +9,22 @@ function EventCard({event, user, onAddPurchase}) {
     const [user_id, setUser_id] = useState(user.id)
 
     function handlePurchaseClick() {
-        const new_purchase = {
-            name: name,
-            number_tickets: number_tickets,
-            event_id: event_id,
-            user_id: user_id,
-            event: {
-                name: event.name,
-                image: event.image,
-                venue: event.venue,
-                city: event.city,
-                state: event.state,
-                price: event.price
-            }
-        }
-        console.log(new_purchase)
+        // const new_purchase = {
+        //     name: name,
+        //     number_tickets: number_tickets,
+        //     event_id: event_id,
+        //     user_id: user_id,
+        //     created_at: (new Date(Date.now())).toLocaleString(),
+        //     event: {
+        //         name: event.name,
+        //         image: event.image,
+        //         venue: event.venue,
+        //         city: event.city,
+        //         state: event.state,
+        //         price: event.price
+        //     }
+        // }
+        // console.log(new_purchase)
         fetch('/purchases', {
             method: 'POST',
             headers: {

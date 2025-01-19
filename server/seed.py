@@ -34,6 +34,7 @@ if __name__ == '__main__':
         events = []
         events.append(Event(name = 'Mary J Blige', image = './images/maryjblige.png', venue = 'Intuit Dome', city = 'Inglewood', state = 'CA', date = datetime.strptime('03/01/2025', '%m/%d/%Y'), price = 123))
         events.append(Event(name = 'J Balvin', image = './images/jbalvin.png', venue = 'Kia Forum', city = 'Inglewood', state = 'CA', date = datetime.strptime('05/09/2025', '%m/%d/%Y'), price = 123))
+        events.append(Event(name = 'Heart', image = './images/heart.png', venue = 'Golden 1 Center', city = 'Sacramento', state = 'CA', date = datetime.strptime('03/04/2025', '%m/%d/%Y'), price = 42))
 
         print('Seeding purchases...')
         purchases = []

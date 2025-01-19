@@ -11,9 +11,15 @@ function EventList({user, onAddPurchase}) {
         .then(data => setEvents(data))
       }, [])
 
+      const sortedEvents = events.sort((a, b) => {
+        const dateA = new Date(a.date);
+        const dateB = new Date(b.date);
+        return dateA.getTime() - dateB.getTime();
+    });
+
     return (
         <div className='list'>
-            {events.map(event => (
+            {sortedEvents.map(event => (
                 <EventCard key={event.id} event={event} user={user} onAddPurchase={onAddPurchase}/>
             ))}
         </div>

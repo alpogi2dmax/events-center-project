@@ -49,6 +49,7 @@ class Purchase(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     number_tickets = db.Column(db.Integer)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     #Add relationships
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
