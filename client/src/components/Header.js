@@ -22,6 +22,7 @@ function Header({user, setUser}) {
             <nav className='navbar'>
                 <h3 className='nav-link'>Welcome, {user.full_name}</h3>
                 <Link className='nav-link' to='/'>Events List</Link>
+                <Link className='nav-link' to='/mylist'>My List</Link>
                 <button className='nav-link' onClick={handleLogOutClick}>Logout</button>
             </nav>
                 

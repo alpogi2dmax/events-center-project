@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import EventCard from './EventCard'
 
-function EventList({user}) {
+function EventList({user, onAddPurchase}) {
 
     const [events, setEvents] = useState([])
     
@@ -10,13 +10,11 @@ function EventList({user}) {
         .then(r => r.json())
         .then(data => setEvents(data))
       }, [])
-    
-      console.log(events)
 
     return (
         <div className='list'>
             {events.map(event => (
-                <EventCard key={event.id} event={event} user={user}/>
+                <EventCard key={event.id} event={event} user={user} onAddPurchase={onAddPurchase}/>
             ))}
         </div>
     )

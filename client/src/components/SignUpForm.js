@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function SignUpForm({ onLogin }) {
+function SignUpForm({ onLogin, onSetPurchases }) {
 
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
@@ -30,7 +30,10 @@ function SignUpForm({ onLogin }) {
             }),
         }).then((r) => {
             if (r.ok) {
-                r.json().then((user) => onLogin(user));
+                r.json().then((user) => {
+                    onLogin(user)
+                    onSetPurchases(user.purchases)
+                });
             } else {
                 r.json().then((err) => {
                     console.log(err);

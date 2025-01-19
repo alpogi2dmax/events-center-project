@@ -133,7 +133,7 @@ class CheckSession(Resource):
 
     def get(self):
 
-        user_id = session['user_id']
+        user_id = session.get('user_id')
 
         if user_id:
             user = User.query.filter(User.id == user_id).first()

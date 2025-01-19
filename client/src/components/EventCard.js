@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
 import './App.css';
 
-function EventCard({event, user}) {
-
-    console.log(event)
+function EventCard({event, user, onAddPurchase}) {
 
     const [number_tickets, setNumber_tickets] = useState(1)
     const [name, setName] = useState(`${user.username}+${event.name}`)
@@ -11,6 +9,21 @@ function EventCard({event, user}) {
     const [user_id, setUser_id] = useState(user.id)
 
     function handlePurchaseClick() {
+        const new_purchase = {
+            name: name,
+            number_tickets: number_tickets,
+            event_id: event_id,
+            user_id: user_id,
+            event: {
+                name: event.name,
+                image: event.image,
+                venue: event.venue,
+                city: event.city,
+                state: event.state,
+                price: event.price
+            }
+        }
+        console.log(new_purchase)
         fetch('/purchases', {
             method: 'POST',
             headers: {
@@ -24,7 +37,7 @@ function EventCard({event, user}) {
             }),
         })
             .then((r) => r.json())
-            .then((purchase) => console.log(purchase))
+            .then((purchase) => onAddPurchase(purchase))
     }
     
 
