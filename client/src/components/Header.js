@@ -48,7 +48,7 @@ function Header({user, setUser}) {
                 </h1>
             </header>
             <nav className='navbar'>
-                <h3 className='nav-link'>Welcome, {user.full_name}</h3>
+                <h4 className='nav-link'>Welcome, {user.full_name}</h4>
                 <Link
                     className={hoveredLink1 ? 'nav-link-2' : 'nav-link'}
                     to='/mylist'

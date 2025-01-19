@@ -38,6 +38,27 @@ class UsersByID(Resource):
         else:
             response_body = {'error': 'User not found'}
             return make_response(response_body, 404)
+        
+    def patch(self, id):
+
+        user = User.query.filter_by(id=id).first()
+        data = request.get_json()
+
+        if len(data.get('username')) < 3 or len(data.get('username')) > 15:
+            raise ValueError('Username must be between 3 and 15 characters')
+        if len(data.get('password')) < 3 or len(data.get('password')) > 15:
+            raise ValueError('Password must be between 3 and 15 characters')
+        if user:
+            for attr, value, in data.items():
+                setattr(user, attr, value)
+
+            db.session.add(user)
+            db.session.commit()
+
+            user_dict = user.to_dict()
+            return make_response(user_dict, 202)
+        else:
+            return make_response({'error': 'User not found'})
 
 api.add_resource(UsersByID, '/users/<int:id>')
 

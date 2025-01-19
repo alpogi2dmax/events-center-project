@@ -42,7 +42,7 @@
 .nav-link{
     display: inline-block;
     box-sizing: border-box;
-    width: 300px;
+    width: 250px;
     padding: 5px;
     margin: 6px 6px 6px;
     background: rgb(3, 16, 94);
@@ -55,7 +55,7 @@
 .nav-link-2 {
     display: inline-block;
     box-sizing: border-box;
-    width: 320px;
+    width: 260px;
     padding: 5px;
     margin: 6px 6px 6px;
     background: rgb(87, 102, 192);
