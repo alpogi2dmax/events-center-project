@@ -52,6 +52,19 @@
     color: white;
 }
 
+.nav-link-2 {
+    display: inline-block;
+    box-sizing: border-box;
+    width: 320px;
+    padding: 5px;
+    margin: 6px 6px 6px;
+    background: rgb(87, 102, 192);
+    text-decoration: none;
+    text-align: center;
+    font-size: min(10vw, 20px) ;
+    color: rgb(58, 58, 58);
+}
+
 
 .list {
     height: 150px;

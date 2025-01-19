@@ -1,5 +1,6 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
+from sqlalchemy.orm import validates
 
 from config import db, datetime
 
@@ -9,8 +10,8 @@ class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String)
-    password = db.Column(db.String)
+    username = db.Column(db.String, unique=True, nullable=False)
+    password = db.Column(db.String, nullable=False)
     full_name = db.Column(db.String)
     profile_pic = db.Column(db.String)
     address = db.Column(db.String)
@@ -23,6 +24,14 @@ class User(db.Model, SerializerMixin):
     
     # Add serialization rules
     serialize_rules = ('-purchases.user',)
+
+    # add validation
+    @validates('username')
+    def validate_username(self, key, username):
+        if len(username) < 3 or len(username) > 15:
+            raise ValueError('Name must be between 3 and 15 characters')
+        return username
+
 
 class Event(db.Model, SerializerMixin):
     __tablename__ = 'events'

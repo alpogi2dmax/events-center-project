@@ -19,6 +19,7 @@ function EventList({user, onAddPurchase}) {
 
     return (
         <div className='list'>
+            <h1>Upcoming Events</h1>
             {sortedEvents.map(event => (
                 <EventCard key={event.id} event={event} user={user} onAddPurchase={onAddPurchase}/>
             ))}
