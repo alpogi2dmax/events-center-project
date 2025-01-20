@@ -104,6 +104,25 @@ class Events(Resource):
         events = [events.to_dict() for events in Event.query.all()]
         return make_response(events, 200) 
     
+    def post(self):
+        try:
+            data = request.get_json()
+            event = Event(
+                name = data['name'],
+                image = data['image'],
+                venue = data['venue'],
+                city = data['city'],
+                state = data['state'],
+                price = data['price']
+            )
+            db.session.add(event)
+            db.session.commit()
+            event_dict = event.to_dict()
+            return make_response(event_dict, 201)
+        except:
+            response_body = {'errors': ['validation errors']}
+            return make_response(response_body, 400)
+    
 api.add_resource(Events, '/events')
 
 class EventsByID(Resource):
