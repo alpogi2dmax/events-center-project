@@ -31,6 +31,12 @@ class User(db.Model, SerializerMixin):
         if len(username) < 3 or len(username) > 15:
             raise ValueError('Name must be between 3 and 15 characters')
         return username
+    
+    @validates('password')
+    def validate_password(self, key, password):
+        if len(password) < 3 or len(password) > 15:
+            raise ValueError('Name must be between 3 and 15 characters')
+        return password
 
 
 class Event(db.Model, SerializerMixin):

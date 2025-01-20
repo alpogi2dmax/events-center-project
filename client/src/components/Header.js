@@ -7,6 +7,7 @@ function Header({user, setUser}) {
     const [hoveredLink1, setHoveredLink1] = useState(false);
     const [hoveredLink2, setHoveredLink2] = useState(false);
     const [hoveredLink3, setHoveredLink3] = useState(false);
+    const [hoveredLink4, setHoveredLink4] = useState(false);
 
     function handleLogOutClick() {
         fetch('/logout', { method: 'DELETE' }).then((r) => {
@@ -40,6 +41,14 @@ function Header({user, setUser}) {
         setHoveredLink3(false);
     };
 
+    const handleMouseOver4 = () => {
+        setHoveredLink4(true);
+    };
+
+    const handleMouseOut4 = () => {
+        setHoveredLink4(false);
+    };
+
     return (
         <div className='logincss'>
             <header className='headercss'>
@@ -61,11 +70,17 @@ function Header({user, setUser}) {
                     onMouseOver={handleMouseOver2}
                     onMouseOut={handleMouseOut2}
                 >Events List</Link>
-                <button 
+                <Link
                     className={hoveredLink3 ? 'nav-link-2' : 'nav-link'}
-                    onClick={handleLogOutClick}
+                    to='/editprofile'
                     onMouseOver={handleMouseOver3}
                     onMouseOut={handleMouseOut3}
+                >Edit Profile</Link>
+                <button 
+                    className={hoveredLink4 ? 'nav-link-2' : 'nav-link'}
+                    onClick={handleLogOutClick}
+                    onMouseOver={handleMouseOver4}
+                    onMouseOut={handleMouseOut4}
                     >Logout
                 </button>
             </nav>

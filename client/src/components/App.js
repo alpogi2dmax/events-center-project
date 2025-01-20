@@ -4,6 +4,7 @@ import EventList from './EventList'
 import MyList from './MyList'
 import Header from'./Header'
 import Login from './Login'
+import EditProfile from "./EditProfile";
 import { useState, useEffect } from "react";
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
 
   function deletePurchase(deletedPurchase) {
     setPurchases(purchases.filter((purchase) => purchase.id !== deletedPurchase.id))
+    
   }
 
   console.log(purchases)
@@ -47,8 +49,11 @@ function App() {
       <Header user={user} setUser={setUser}/>
       <main>
         <Switch>
-        <Route path='/mylist'>
+          <Route path='/mylist'>
             <MyList purchases={purchases} onDeletePurchase={deletePurchase}/>
+          </Route>
+          <Route path='/editprofile'>
+            <EditProfile user={user}/>
           </Route>
           <Route path='/'>
             <EventList user={user} onAddPurchase={addPurchase} />
