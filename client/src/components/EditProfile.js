@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-function EditProfile({user}) {
+function EditProfile({user, onLogin, onSetPurchases}) {
 
     const [username, setUsername] = useState(user.username)
         const [password, setPassword] = useState(user.password)
@@ -11,6 +11,36 @@ function EditProfile({user}) {
         const [state, setState] = useState(user.state)
         const [errors, setErrors] = useState([])
 
+    function handleSubmit() {
+        fetch(`/users/${user.id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                username,
+                password,
+                full_name,
+                profile_pic,
+                address,
+                city,
+                state,
+            }),
+        }).then((r) => {
+            if (r.ok) {
+                r.json().then((user) => {
+                    onLogin(user)
+                    onSetPurchases(user.purchases)
+                });
+            } else {
+                r.json().then((err) => {
+                    console.log(err);
+                    setErrors([err.error]);
+                }
+            )}
+        })
+    }
+
     return (
         <div className='logincss'>
             <h1 >Edit Profile</h1>
@@ -19,7 +49,7 @@ function EditProfile({user}) {
                     <img className='profile' src={user.profile_pic} alt={user.name} />
                 </div>
                 <div className='box'>
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <label>Username: </label>
                         <input type='text' name='username' id='username' value={username} onChange={(e) => setUsername(e.target.value)} />
                         <br></br>
@@ -42,7 +72,6 @@ function EditProfile({user}) {
                         <input type='text' name='state' id='state' value={state} onChange={(e) => setState(e.target.value)} />
                         <br></br>
                         <input type='submit' value='Submit' />
-                        <button>Cancel</button>
                         {errors.map((err) => (
                             <p key={err}>{err}</p>
                         ))}
