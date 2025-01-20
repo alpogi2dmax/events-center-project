@@ -1,70 +1,78 @@
-# Getting Started with Create React App
+# Events Center Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The intention for this is project is to showcase a Full Stack Application utilizing Flask in the back end and React in the front end. The premise of the application is to allow users to purchase tickets for events they would want to watch. The application allows a user to sign up to get access to the application. The user can then browse existing events, purchase events, which would then be viewed in the list of events the user purchases. There is an ability to edit the user's profile as well.
 
-## Available Scripts
+## Set Up
 
-In the project directory, you can run:
+To use the application, run the following commands:
 
-### `npm start`
+- pipenv shell
+- python server/seed.py. This would refresh and populate the database.
+- python server/app.py. This would provide access to the back end
+- In another terminal, run npm start --prefix client which will give access to the front end.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## BackEnd Structure
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+The backend utlizes Flask. Files are as follows:
 
-### `npm test`
+### models.py
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Three tables are set up which are as follows:
+- User- which contains information about the user
+- Event - which contains information about the events
+- Purchase - which contains information about purchases. This also servers as the inbetween for User and Event since the structure is on a many to many relationship.
 
-### `npm run build`
+### app.py
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Utilizing RESTful APIs, it contains Routes for each Resource that allows HTTP Request Methods for each Resource. A Login, CheckSession, and Logout are included for User login and log out.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### seed.py
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+After the database is created, data is refreshed and populated through seed.py
 
-### `npm run eject`
+## FrontEnd Structure
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+The frontend utilizes React. Data if accessed via fetch to the backend. Structure is as follows:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+App.js
+│   ├── Login.js
+|   |       ├── LoginForm.js
+|   |       └── SignUpForm.js
+│   ├── Header.js
+│   ├── EventList.js
+|   |       └── EventCard.js
+│   ├── MyList.js
+|   |       └── MyCard.js
+│   └── EditProfile
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Login.js
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Once the App is loaded, a check session run via useEffect. If there is no user, the user would be directed to Login.js. The user would then be prompted if the next action would be login or signup.
 
-## Learn More
+### LoginForm.js
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+If the user has an existing account and opted to Login, a post fetch request would be done which will lead to a post in the Login resource. If credentials match, the user's session would be saved and would have access to the EventList.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### SignUpForm.js
 
-### Code Splitting
+If the user is creating a profile, details would need to be entered which will lead to a post request. This will lead to a post in the backend in the Signup resource. It would then create a user in the database and save the session.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Eventlist.js
 
-### Analyzing the Bundle Size
+This is a get request of all events sorted by date. Each event is passed on to the EventCard.js
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### EventCard.js
 
-### Making a Progressive Web App
+The user is then given the capability to purchase which would trigger a purchase post request. Through the user and event relationship, the purchased event would be added to my list.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### MyList.js
 
-### Advanced Configuration
+Each purchased event by the user would show as a relationship under the user. This is then sorted as a list. Each purchased event is rendered as a card in MyCard.js.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### MyCard.js
 
-### Deployment
+Each card would show and give the user a capacility to delete the purchase.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### EditProfile.js
 
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The user can edit it's profile which would set a Patch request to users/id.
