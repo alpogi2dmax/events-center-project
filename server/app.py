@@ -141,6 +141,11 @@ api.add_resource(EventsByID, '/events/<int:id>')
 
 class Purchases(Resource):
 
+    def get(self):
+
+        purchases = [purchase.to_dict() for purchase in Purchase.query.all()]
+        return make_response(purchases, 200)
+
     def post(self):
 
         try:
