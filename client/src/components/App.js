@@ -53,7 +53,7 @@ function App() {
             <MyList purchases={purchases} onDeletePurchase={deletePurchase}/>
           </Route>
           <Route path='/editprofile'>
-            <EditProfile user={user}/>
+            <EditProfile user={user} onLogin={setUser} onSetPurchases={setPurchases}/>
           </Route>
           <Route path='/'>
             <EventList user={user} onAddPurchase={addPurchase} />

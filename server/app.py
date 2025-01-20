@@ -25,6 +25,26 @@ class Users(Resource):
         users = [users.to_dict() for users in User.query.all()]
         return make_response(users, 200)
     
+    def post(self):
+        try:
+            data = request.get_json()
+            user = User(
+                username = data['username'],
+                password = data['password'],
+                full_name = data['full_name'],
+                profile_pic =data['profile_pic'],
+                address = data['address'],
+                city = data['city'],
+                state = data['state']
+            )
+            db.session.add(user)
+            db.session.commit()
+            user_dict = user.to_dict()
+            return make_response(user_dict, 201)
+        except:
+            response_body = {'errors': ['validation errors']}
+            return make_response(response_body, 400)
+    
 api.add_resource(Users, '/users')
 
 class UsersByID(Resource):
@@ -59,6 +79,21 @@ class UsersByID(Resource):
             return make_response(user_dict, 202)
         else:
             return make_response({'error': 'User not found'})
+    
+    def delete(self, id):
+
+        user = User.query.filter_by(id=id).first()
+
+        if user:
+            db.session.delete(user)
+            db.session.commit()
+            response_body = ''
+            return make_response(response_body, 204)
+        else:
+            response_body = {'error': 'Purchase not found'}
+            return make_response(response_body, 404)
+        
+    
 
 api.add_resource(UsersByID, '/users/<int:id>')
 
