@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
+import {useHistory} from 'react-router-dom'
 import './App.css';
 
 function EventCard({event, user }) {
 
     const [number_tickets, setNumber_tickets] = useState(1)
+    const history = useHistory()
+
     const name = `${user.username}+${event.name}`
     const event_id = event.id
     const user_id = user.id
@@ -23,8 +26,8 @@ function EventCard({event, user }) {
         })
             .then((r) => r.json())
             .then((purchase) => {
-                
               console.log(purchase)
+              history.push('/mylist')
             })
     }
     

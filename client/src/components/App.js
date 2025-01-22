@@ -13,7 +13,6 @@ function App() {
 
 
   useEffect(() => {
-    if (!user) return <Login onLogin={setUser} />
     fetch('/checksession')
     .then((r) => {
       if (r.ok) {
@@ -55,3 +54,4 @@ function App() {
 
 
 export default App
+

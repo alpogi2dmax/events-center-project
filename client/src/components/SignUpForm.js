@@ -2,7 +2,7 @@
 // import { useFormik } from 'formik';
 // import * as yup from "yup";
 
-// function SignUpForm({ onLogin, onSetPurchases }) {
+// function SignUpForm({ onLogin }) {
 
 //     const formSchema = yup.object().shape({
 //         username: yup.string().required("Must enter username").min(2).max(15),
@@ -36,7 +36,6 @@
 //             .then((r) => r.json())
 //             .then((user) => {
 //                 onLogin(user)
-//                 onSetPurchases(user.purchases)
 //             })
 //         }
 //     })
@@ -89,6 +88,14 @@
 // }
 
 // export default SignUpForm;
+
+
+
+
+
+
+
+
 
 import React, { useState } from 'react';
 
