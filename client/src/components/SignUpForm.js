@@ -146,11 +146,11 @@ function SignUpForm({ onLogin}) {
         <form onSubmit={handleSubmit}>
             <label>Username: </label>
             <input type='text' name='username' id='username' value={username} onChange={(e) => setUsername(e.target.value)} />
-            <br></br>
+            {username.length < 2 || username.length > 15 ? <p style={{ color: 'red' }}>Username must be between 2 and 15 characters</p> : <br></br>}
             <br></br>
             <label>Password: </label>
             <input type='text' name='password' id='password' value={password} onChange={(e) => setPassword(e.target.value)} />
-            <br></br>
+            {password.length < 2 || password.length > 15 ? <p style={{ color: 'red' }}>Username must be between 2 and 15 characters</p> : <br></br>}
             <br></br>
             <label>Full Name: </label>
             <input type='text' name='full_name' id='full_name' value={full_name} onChange={(e) => setFull_name(e.target.value)} />
