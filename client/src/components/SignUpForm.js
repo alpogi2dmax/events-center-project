@@ -1,19 +1,8 @@
-// import React, { useState } from 'react';
+// import React from 'react';
 // import { useFormik } from 'formik';
 // import * as yup from "yup";
 
 // function SignUpForm({ onLogin, onSetPurchases }) {
-
-//     // const [username, setUsername] = useState('')
-//     // const [password, setPassword] = useState('')
-//     // const [full_name, setFull_name] = useState('')
-//     // const [profile_pic, setProfile_pic] = useState('')
-//     // const [address, setAddress] = useState('')
-//     // const [city, setCity] = useState('')
-//     // const [state, setState] = useState('')
-//     // const [errors, setErrors] = useState([])
-
-    
 
 //     const formSchema = yup.object().shape({
 //         username: yup.string().required("Must enter username").min(2).max(15),
@@ -103,7 +92,7 @@
 
 import React, { useState } from 'react';
 
-function SignUpForm({ onLogin, onSetPurchases }) {
+function SignUpForm({ onLogin}) {
 
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
@@ -135,7 +124,6 @@ function SignUpForm({ onLogin, onSetPurchases }) {
             if (r.ok) {
                 r.json().then((user) => {
                     onLogin(user)
-                    onSetPurchases(user.purchases)
                 });
             } else {
                 r.json().then((err) => {

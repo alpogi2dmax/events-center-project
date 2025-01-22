@@ -10,18 +10,16 @@ import { useState, useEffect } from "react";
 function App() {
 
   const [user, setUser] = useState(null);
-  const [purchases, setPurchases] = useState([])
 
 
   useEffect(() => {
+    if (!user) return <Login onLogin={setUser} />
     fetch('/checksession')
     .then((r) => {
       if (r.ok) {
         if (r.headers.get('content-length') > 0) {
           r.json()
-          .then((user) => {
-            setUser(user)
-        })
+          .then((user) => setUser(user))
           .catch((error) => console.error("JSON parsing error:", error));
         } else {
           console.warn("No content returned from /checksession");
@@ -31,18 +29,7 @@ function App() {
     .catch((error) => console.error("Fetch error:", error));
 }, []);
 
-  if (!user) return <Login onLogin={setUser} onSetPurchases={setPurchases}/>
-
-  function addPurchase(purchase) {
-    setPurchases([...purchases, purchase])
-  }
-
-  function deletePurchase(deletedPurchase) {
-    setPurchases(purchases.filter((purchase) => purchase.id !== deletedPurchase.id))
-    
-  }
-
-  console.log(purchases)
+  if (!user) return <Login onLogin={setUser} />
 
   return (
     <div>
@@ -50,13 +37,13 @@ function App() {
       <main>
         <Switch>
           <Route path='/mylist'>
-            <MyList purchases={purchases} onDeletePurchase={deletePurchase}/>
+            <MyList />
           </Route>
           <Route path='/editprofile'>
-            <EditProfile user={user} onLogin={setUser} onSetPurchases={setPurchases}/>
+            <EditProfile user={user} onLogin={setUser} />
           </Route>
           <Route path='/'>
-            <EventList user={user} onAddPurchase={addPurchase} />
+            <EventList user={user}  />
           </Route>
         </Switch>
       </main>

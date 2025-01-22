@@ -1,30 +1,14 @@
 import React, { useState } from 'react'
 import './App.css';
 
-function EventCard({event, user, onAddPurchase}) {
+function EventCard({event, user }) {
 
     const [number_tickets, setNumber_tickets] = useState(1)
-    const [name, setName] = useState(`${user.username}+${event.name}`)
-    const [event_id, setEvent_id] = useState(event.id)
-    const [user_id, setUser_id] = useState(user.id)
+    const name = `${user.username}+${event.name}`
+    const event_id = event.id
+    const user_id = user.id
 
     function handlePurchaseClick() {
-        // const new_purchase = {
-        //     name: name,
-        //     number_tickets: number_tickets,
-        //     event_id: event_id,
-        //     user_id: user_id,
-        //     created_at: (new Date(Date.now())).toLocaleString(),
-        //     event: {
-        //         name: event.name,
-        //         image: event.image,
-        //         venue: event.venue,
-        //         city: event.city,
-        //         state: event.state,
-        //         price: event.price
-        //     }
-        // }
-        // console.log(new_purchase)
         fetch('/purchases', {
             method: 'POST',
             headers: {
@@ -38,7 +22,10 @@ function EventCard({event, user, onAddPurchase}) {
             }),
         })
             .then((r) => r.json())
-            .then((purchase) => onAddPurchase(purchase))
+            .then((purchase) => {
+                
+              console.log(purchase)
+            })
     }
     
 

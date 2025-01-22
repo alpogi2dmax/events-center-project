@@ -3,7 +3,7 @@
 # Standard library imports
 
 # Remote library imports
-from flask import request, make_response, session
+from flask import request, make_response, session, jsonify
 from flask_restful import Resource
 
 # Local imports
@@ -214,12 +214,17 @@ class CheckSession(Resource):
     def get(self):
 
         user_id = session.get('user_id')
-
+        # breakpoint()
+        # return make_response('I am in check session')
         if user_id:
             user = User.query.filter(User.id == user_id).first()
+            
+            for event in user.events:
+                adjusted_purchases = [purchase for purchase in event.purchases if purchase.user_id == user.id]
+                event.purchases = adjusted_purchases
             user_dict = user.to_dict()
-            return make_response(user_dict, 200)
-        
+            # return make_response('I am in check session')
+            return jsonify(user_dict, 200)
         return {}, 204
 
 api.add_resource(CheckSession, '/checksession')

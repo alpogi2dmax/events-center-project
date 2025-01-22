@@ -49,6 +49,7 @@ if __name__ == '__main__':
         print('Seeding purchases...')
         purchases = []
         purchases.append(Purchase(name = 'lebron_mary', number_tickets = 2, user_id = 1, event_id = 1))
+        purchases.append(Purchase(name = 'lebron_mary', number_tickets = 3, user_id = 1, event_id = 1))
         purchases.append(Purchase(name = 'conan_mary', number_tickets = 3, user_id = 2, event_id = 1))
         db.session.add_all(users)
         db.session.add_all(events)

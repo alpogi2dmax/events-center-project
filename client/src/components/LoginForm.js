@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-function LoginForm({onLogin, onSetPurchases}) {
+function LoginForm({onLogin}) {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -17,8 +17,9 @@ function LoginForm({onLogin, onSetPurchases}) {
         }).then((r) => {
             if (r.ok) {
                 r.json().then((user) => {
+                    console.log(user.events)
                     onLogin(user)
-                    onSetPurchases(user.purchases)
+                    // onSetEvents(user.events)
                 });
             } else {
                 // Check if response has content before parsing
