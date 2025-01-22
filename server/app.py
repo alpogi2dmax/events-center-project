@@ -101,7 +101,7 @@ class Events(Resource):
 
     def get(self):
 
-        events = [events.to_dict() for events in Event.query.all()]
+        events = [events.to_dict() for events in Event.query.order_by(Event.date).all()]
         return make_response(events, 200) 
     
     def post(self):

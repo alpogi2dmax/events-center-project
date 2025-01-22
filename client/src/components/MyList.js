@@ -34,12 +34,12 @@ function MyList() {
         )
     }
 
-    const sortedEvents = events.sort((a, b) => new Date(a.date) - new Date(b.date));
+    // const sortedEvents = events.sort((a, b) => new Date(a.date) - new Date(b.date));
 
     return (
         <div className='list'>
             <h1>My Events</h1>
-            {sortedEvents.map(event => (
+            {events.map(event => (
                 <MyCard key={event.id} event={event} onDeletePurchase={handleDeletePurchase} />
             ))}
         </div>
