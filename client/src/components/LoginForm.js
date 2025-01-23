@@ -46,7 +46,7 @@ function LoginForm({onLogin}) {
             <br></br>
             <br></br>
             <label for="password">Password: </label>
-            <input type="text" id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+            <input type="password" id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
             <br></br>
             <input type="submit" value="Login"/>
             {errors.map((err) => (

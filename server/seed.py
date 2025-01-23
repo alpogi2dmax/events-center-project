@@ -57,11 +57,16 @@ if __name__ == '__main__':
             )
         user3.password_hash = 'p@ssw0rd'
         users.append(user3)
-        # users.append(User(username = 'lebronjames', full_name = 'Lebron James', profile_pic = './images/lebronjames.png', address = '9955 W Beverly Grove Dr', city = 'Beverly Hills', state = 'CA'); user.password_hash = 'password')
-        # users.append(User(username = 'conanobrien', password = 'p@ssw0rd', full_name = 'Conan OBrien', profile_pic = 'images/conanobrien.png', address = '1253 Amalfi Dr', city = 'Los Angeles', state = 'CA'))
-        # users.append(User(username = 'tomcruise', password = 'p@ssw0rd', full_name = 'Tom Cruise', profile_pic = 'images/tomcruise.png', address = '1111 Calle Vista Dr', city = 'Beverly Hills', state = 'CA'))
-        # users.append(User(username = 'billgates', password = 'p@ssw0rd', full_name = 'Bill Gates', profile_pic = 'images/billgates.png', address = '1835 73rd Ave NE', city = 'Medina', state = 'WA'))
-
+        user4 = User(
+            username='billgates',
+            full_name='Bill Gates',
+            profile_pic='./images/billgates.png',
+            address='1111 Calle Vista Dr',
+            city='1835 73rd Ave NE',
+            state='WA'
+            )
+        user4.password_hash = 'p@ssw0rd'
+        users.append(user4)
 
         print('Seeding events...')
         events = []

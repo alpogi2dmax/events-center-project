@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 
-function EditProfile({user, onLogin, onSetPurchases}) {
+function EditProfile({user, onLogin, onLogOut}) {
 
     const [username, setUsername] = useState(user.username)
-        const [password, setPassword] = useState(user.password)
+        // const [password, setPassword] = useState(user.password)
         const [full_name, setFull_name] = useState(user.full_name)
         const [profile_pic, setProfile_pic] = useState(user.profile_pic)
         const [address, setAddress] = useState(user.address)
@@ -11,7 +11,8 @@ function EditProfile({user, onLogin, onSetPurchases}) {
         const [state, setState] = useState(user.state)
         const [errors, setErrors] = useState([])
 
-    function handleSubmit() {
+    function handleSubmit(e) {
+        e.preventDefault()
         fetch(`/users/${user.id}`, {
             method: "PATCH",
             headers: {
@@ -19,7 +20,7 @@ function EditProfile({user, onLogin, onSetPurchases}) {
             },
             body: JSON.stringify({
                 username,
-                password,
+                // password,
                 full_name,
                 profile_pic,
                 address,
@@ -28,9 +29,9 @@ function EditProfile({user, onLogin, onSetPurchases}) {
             }),
         }).then((r) => {
             if (r.ok) {
-                r.json().then((user) => {
-                    onLogin(user)
-                    onSetPurchases(user.purchases)
+                r.json().then((updatedUser) => {
+                    onLogin(updatedUser)
+                    alert('Your Profile has been updated!')
                 });
             } else {
                 r.json().then((err) => {
@@ -39,6 +40,13 @@ function EditProfile({user, onLogin, onSetPurchases}) {
                 }
             )}
         })
+    }
+
+    function handleDelete() {
+        fetch(`/users/${user.id}`, {
+            method: "DELETE",
+        })
+        .then(() => onLogOut())
     }
 
     return (
@@ -53,9 +61,9 @@ function EditProfile({user, onLogin, onSetPurchases}) {
                         <label>Username: </label>
                         <input type='text' name='username' id='username' value={username} onChange={(e) => setUsername(e.target.value)} />
                         <br></br>
-                        <label>Password: </label>
+                        {/* <label>Password: </label>
                         <input type='text' name='password' id='password' value={password} onChange={(e) => setPassword(e.target.value)} />
-                        <br></br>
+                        <br></br> */}
                         <label>Full Name: </label>
                         <input type='text' name='full_name' id='full_name' value={full_name} onChange={(e) => setFull_name(e.target.value)} />
                         <br></br>
@@ -76,6 +84,9 @@ function EditProfile({user, onLogin, onSetPurchases}) {
                             <p key={err}>{err}</p>
                         ))}
                     </form>
+                    <div>
+                        <button onClick={handleDelete}>Delete Profile</button>
+                    </div>
                 </div>
             </div>
         </div>

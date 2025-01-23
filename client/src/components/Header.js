@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Login from './Login';
 import './App.css';
 
-function Header({user, setUser}) {
+function Header({user, setUser, onLogOut}) {
 
 
     const [hoveredLink1, setHoveredLink1] = useState(false);
@@ -11,12 +11,16 @@ function Header({user, setUser}) {
     const [hoveredLink3, setHoveredLink3] = useState(false);
     const [hoveredLink4, setHoveredLink4] = useState(false);
 
+    // function handleLogOutClick() {
+    //     fetch('/logout', { method: 'DELETE' }).then((r) => {
+    //         if (r.ok) {
+    //             setUser(null);
+    //         }
+    //     })
+    // }
+
     function handleLogOutClick() {
-        fetch('/logout', { method: 'DELETE' }).then((r) => {
-            if (r.ok) {
-                setUser(null);
-            }
-        })
+        onLogOut()
     }
 
     const handleMouseOver1 = () => {

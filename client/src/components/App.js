@@ -26,20 +26,28 @@ function App() {
       }
     })
     .catch((error) => console.error("Fetch error:", error));
-}, []);
+  }, []);
+
+  function handleLogOut() {
+    fetch('/logout', { method: 'DELETE' }).then((r) => {
+        if (r.ok) {
+            setUser(null);
+        }
+    })
+}
 
   if (!user) return <Login onLogin={setUser} />
 
   return (
     <div>
-      <Header user={user} setUser={setUser}/>
+      <Header user={user} setUser={setUser} onLogOut={handleLogOut}/>
       <main>
         <Switch>
           <Route path='/mylist'>
             <MyList />
           </Route>
           <Route path='/editprofile'>
-            <EditProfile user={user} onLogin={setUser} />
+            <EditProfile user={user} onLogin={setUser} onLogOut={handleLogOut} />
           </Route>
           <Route path='/'>
             <EventList user={user}  />
