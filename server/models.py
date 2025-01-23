@@ -1,8 +1,9 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
+from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import validates
 
-from config import db, datetime
+from config import db, datetime, bcrypt
 
 # Models go here!
 
@@ -11,12 +12,26 @@ class User(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, nullable=False)
-    password = db.Column(db.String, nullable=False)
+    _password_hash = db.Column(db.String)
     full_name = db.Column(db.String)
     profile_pic = db.Column(db.String)
     address = db.Column(db.String)
     city = db.Column(db.String)
     state = db.Column(db.String)
+
+    @hybrid_property
+    def password_hash(self):
+        raise Exception('Password hashes may not be viewed.')
+
+    @password_hash.setter
+    def password_hash(self, password):
+        password_hash = bcrypt.generate_password_hash(
+            password.encode('utf-8'))
+        self._password_hash = password_hash.decode('utf-8')
+
+    def authenticate(self, password):
+        return bcrypt.check_password_hash(
+            self._password_hash, password.encode('utf-8'))
 
     # Add relationships
     purchases = db.relationship(
@@ -25,13 +40,10 @@ class User(db.Model, SerializerMixin):
     events = association_proxy('purchases', 'event',
                                creator=lambda event_obj: Purchase(event=event_obj))
 
-    # events = db.relationship(
-    #     'Event', secondary='purchases', viewonly=True)
     
     def to_dict(self):
         user_dict = super().to_dict()
 
-        # Use a set to eliminate duplicate events
         unique_events = {event for event in self.events}
         user_dict['events'] = [event.to_dict() for event in unique_events]
 
@@ -75,18 +87,6 @@ class Event(db.Model, SerializerMixin):
     
     users = association_proxy('purchases', 'user',
                                creator=lambda user_obj: Purchase(user=user_obj))
-    
-    # def to_dict(self):
-    #     return {
-    #         'id': self.id,
-    #         'name': self.name,
-    #         'image': self.image,
-    #         'venue': self.venue,
-    #         'city': self.city,
-    #         'state': self.state,
-    #         'date': self.date.isoformat() if self.date else None,
-    #         'price': self.price
-    #     }
     
     # Add serialization rules
     serialize_rules = ('-purchases.event',)

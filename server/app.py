@@ -30,13 +30,13 @@ class Users(Resource):
             data = request.get_json()
             user = User(
                 username = data['username'],
-                password = data['password'],
                 full_name = data['full_name'],
                 profile_pic =data['profile_pic'],
                 address = data['address'],
                 city = data['city'],
                 state = data['state']
             )
+            user.password_hash = data['password']
             db.session.add(user)
             db.session.commit()
             user_dict = user.to_dict()
@@ -66,8 +66,8 @@ class UsersByID(Resource):
 
         if len(data.get('username')) < 3 or len(data.get('username')) > 15:
             raise ValueError('Username must be between 3 and 15 characters')
-        if len(data.get('password')) < 3 or len(data.get('password')) > 15:
-            raise ValueError('Password must be between 3 and 15 characters')
+        # if len(data.get('password')) < 3 or len(data.get('password')) > 15:
+        #     raise ValueError('Password must be between 3 and 15 characters')
         if user:
             for attr, value, in data.items():
                 setattr(user, attr, value)
@@ -192,13 +192,13 @@ class SignUp(Resource):
             data = request.get_json()
             user = User(
                 username = data['username'],
-                password = data['password'],
                 full_name = data['full_name'],
                 profile_pic =data['profile_pic'],
                 address = data['address'],
                 city = data['city'],
                 state = data['state']
             )
+            user.password_hash = data['password']
             db.session.add(user)
             db.session.commit()
             user_dict = user.to_dict()
@@ -238,13 +238,22 @@ class Login(Resource):
 
         password = request.get_json()['password']
 
-        if password == user.password:
+        if user.authenticate(password):
             session['user_id'] = user.id
             user_dict = user.to_dict()
             return make_response(user_dict, 200)
         else:
             response_body = {'error': 'Invalid username and password'}
             return make_response(response_body, 401)
+        
+
+        # if password == user.password:
+        #     session['user_id'] = user.id
+        #     user_dict = user.to_dict()
+        #     return make_response(user_dict, 200)
+        # else:
+        #     response_body = {'error': 'Invalid username and password'}
+        #     return make_response(response_body, 401)
         
 api.add_resource(Login, '/login')
         
