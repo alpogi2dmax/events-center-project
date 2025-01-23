@@ -9,7 +9,7 @@ from flask_restful import Resource
 # Local imports
 from config import app, db, api
 # Add your model imports
-from models import User,Event, Purchase
+from models import User,Event, Purchase, datetime
 
 
 # Views go here!
@@ -107,9 +107,14 @@ class Events(Resource):
     def post(self):
         try:
             data = request.get_json()
+
+            # Convert the date string to a datetime object
+            event_date = datetime.strptime(data['date'], "%Y-%m-%d")
+            
             event = Event(
                 name = data['name'],
                 image = data['image'],
+                date = event_date,
                 venue = data['venue'],
                 city = data['city'],
                 state = data['state'],
@@ -119,8 +124,9 @@ class Events(Resource):
             db.session.commit()
             event_dict = event.to_dict()
             return make_response(event_dict, 201)
-        except:
-            response_body = {'errors': ['validation errors']}
+        except Exception as e: 
+            print("Error:", e) 
+            response_body = {'errors': ['validation errors']} 
             return make_response(response_body, 400)
     
 api.add_resource(Events, '/events')
