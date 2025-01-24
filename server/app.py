@@ -66,8 +66,7 @@ class UsersByID(Resource):
 
         if len(data.get('username')) < 3 or len(data.get('username')) > 15:
             raise ValueError('Username must be between 3 and 15 characters')
-        # if len(data.get('password')) < 3 or len(data.get('password')) > 15:
-        #     raise ValueError('Password must be between 3 and 15 characters')
+       
         if user:
             for attr, value, in data.items():
                 setattr(user, attr, value)
@@ -142,6 +141,19 @@ class EventsByID(Resource):
         else:
             response_body = {'error': 'Event not found'}
             return make_response(response_body, 200)
+    
+    def delete(self, id):
+
+        event = Event.query.filter_by(id=id).first()
+
+        if event:
+            db.session.delete(event)
+            db.session.commit()
+            response_body = ''
+            return make_response(response_body, 204)
+        else:
+            response_body = {'error': 'Event not found'}
+            return make_response(response_body, 404)
         
 api.add_resource(EventsByID, '/events/<int:id>')
 
@@ -175,6 +187,23 @@ class Purchases(Resource):
 api.add_resource(Purchases, '/purchases')
 
 class PurchasesByID(Resource):
+
+    def patch(self, id):
+
+        purchase = Purchase.query.filter_by(id=id).first()
+        data = request.get_json()
+
+        if purchase:
+            for attr, value, in data.items():
+                setattr(purchase, attr, value)
+
+            db.session.add(purchase)
+            db.session.commit()
+
+            purchase_dict = purchase.to_dict()
+            return make_response(purchase_dict, 202)
+        else:
+            return make_response({'error': 'User not found'})
 
     def delete(self, id):
 

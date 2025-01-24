@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { useFormik } from 'formik';
+import * as yup from "yup";
 
 function EditProfile({user, onLogin, onLogOut}) {
 
@@ -11,36 +13,70 @@ function EditProfile({user, onLogin, onLogOut}) {
         const [state, setState] = useState(user.state)
         const [errors, setErrors] = useState([])
 
-    function handleSubmit(e) {
-        e.preventDefault()
-        fetch(`/users/${user.id}`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
+    const formSchema = yup.object().shape({
+            username: yup.string().required("Must enter username").min(2).max(15),
+            full_name: yup.string().required("Must enter full name"),
+            profile_pic: yup.string().required("Must enter profile picture"),
+            address: yup.string().required("Must enter address"),
+            city: yup.string().required("Must enter city"),
+            state: yup.string().required("Must enter state")
+        })
+    
+        const formik = useFormik({
+            initialValues: {
+                username: user.username,
+                full_name: user.full_name,
+                profile_pic: user.profile_pic,
+                address: user.address,
+                city: user.city,
+                state: user.state
             },
-            body: JSON.stringify({
-                username,
-                // password,
-                full_name,
-                profile_pic,
-                address,
-                city,
-                state,
-            }),
-        }).then((r) => {
-            if (r.ok) {
-                r.json().then((updatedUser) => {
+            validationSchema: formSchema,
+            onSubmit: (values) => {
+                fetch(`/users/${user.id}`, {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(values, null, 2),
+                })
+                .then((r) => r.json())
+                .then((updatedUser) => {
                     onLogin(updatedUser)
                     alert('Your Profile has been updated!')
-                });
-            } else {
-                r.json().then((err) => {
-                    console.log(err);
-                    setErrors([err.error]);
-                }
-            )}
+                })
+            },
         })
-    }
+
+    // function handleSubmit(e) {
+    //     e.preventDefault()
+    //     fetch(`/users/${user.id}`, {
+    //         method: "PATCH",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //         },
+    //         body: JSON.stringify({
+    //             username,
+    //             full_name,
+    //             profile_pic,
+    //             address,
+    //             city,
+    //             state,
+    //         }),
+    //     }).then((r) => {
+    //         if (r.ok) {
+    //             r.json().then((updatedUser) => {
+    //                 onLogin(updatedUser)
+    //                 alert('Your Profile has been updated!')
+    //             });
+    //         } else {
+    //             r.json().then((err) => {
+    //                 console.log(err);
+    //                 setErrors([err.error]);
+    //             }
+    //         )}
+    //     })
+    // }
 
     function handleDelete() {
         fetch(`/users/${user.id}`, {
@@ -57,32 +93,40 @@ function EditProfile({user, onLogin, onLogOut}) {
                     <img className='profile' src={user.profile_pic} alt={user.name} />
                 </div>
                 <div className='box'>
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={formik.handleSubmit}>
                         <label>Username: </label>
-                        <input type='text' name='username' id='username' value={username} onChange={(e) => setUsername(e.target.value)} />
+                        <input type='text' name='username' id='username' value={formik.values.username} onChange={formik.handleChange} />
+                        <p style={{color: "red" }}> {formik.errors.username}</p>
                         <br></br>
-                        {/* <label>Password: </label>
-                        <input type='text' name='password' id='password' value={password} onChange={(e) => setPassword(e.target.value)} />
-                        <br></br> */}
+                        <br></br>
                         <label>Full Name: </label>
-                        <input type='text' name='full_name' id='full_name' value={full_name} onChange={(e) => setFull_name(e.target.value)} />
+                        <input type='text' name='full_name' id='full_name' value={formik.values.full_name} onChange={formik.handleChange} />
+                        <p style={{color: "red" }}> {formik.errors.full_name}</p>
+                        <br></br>
                         <br></br>
                         <label>Profile Picture: </label>
-                        <input type='text' name='profile_pic' id='profile_pic' value={profile_pic} onChange={(e) => setProfile_pic(e.target.value)} />
+                        <input type='text' name='profile_pic' id='profile_pic' value={formik.values.profile_pic} onChange={formik.handleChange} />
+                        <p style={{color: "red" }}> {formik.errors.profile_pic}</p>
+                        <br></br>
                         <br></br>
                         <label>Address: </label>
-                        <input type='text' name='address' id='address' value={address} onChange={(e) => setAddress(e.target.value)} />
+                        <input type='text' name='address' id='address' value={formik.values.address} onChange={formik.handleChange} />
+                        <p style={{color: "red" }}> {formik.errors.address}</p>
+                        <br></br>
                         <br></br>
                         <label>City: </label>
-                        <input type='text' name='city' id='city' value={city} onChange={(e) => setCity(e.target.value)} />
+                        <input type='text' name='city' id='city' value={formik.values.city} onChange={formik.handleChange} />
+                        <p style={{color: "red" }}> {formik.errors.city}</p>
+                        <br></br>
                         <br></br>
                         <label>State: </label>
-                        <input type='text' name='state' id='state' value={state} onChange={(e) => setState(e.target.value)} />
+                        <input type='text' name='state' id='state' value={formik.values.state} onChange={formik.handleChange} />
+                        <p style={{color: "red" }}> {formik.errors.state}</p>
                         <br></br>
-                        <input type='submit' value='Submit' />
-                        {errors.map((err) => (
-                            <p key={err}>{err}</p>
-                        ))}
+                        <br></br>
+                        <button type='submit'>Submit</button>
+                        <br></br>
+                        <br></br>
                     </form>
                     <div>
                         <button onClick={handleDelete}>Delete Profile</button>

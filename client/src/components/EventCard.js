@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import {useHistory} from 'react-router-dom'
 import './App.css';
 
-function EventCard({event, user }) {
+function EventCard({event, user, onDeleteEvent }) {
 
     const [number_tickets, setNumber_tickets] = useState(1)
     const history = useHistory()
@@ -30,6 +30,21 @@ function EventCard({event, user }) {
               history.push('/mylist')
             })
     }
+
+    function handleDeleteClick() {
+        console.log(onDeleteEvent)
+        fetch(`/events/${event.id}`, {
+            method: 'DELETE',
+        })
+        .then((r) => {
+            if (r.ok) {
+                onDeleteEvent(event);
+            } else {
+                throw new Error('Network response was not ok.');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
     
 
     return (
@@ -52,6 +67,7 @@ function EventCard({event, user }) {
                     <label for='quantity'>Quantity: </label>
                     <input id='quantity' value={number_tickets} onChange={(e) => setNumber_tickets(parseInt(e.target.value))}/>
                     <button onClick={handlePurchaseClick}>Purchase Tickets</button>
+                    <button onClick={handleDeleteClick}>Cancel Event</button>
                 </div>
             </div>
             <div>

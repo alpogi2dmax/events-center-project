@@ -54,6 +54,7 @@ function EventList({user}) {
             .then((r) => r.json())
             .then((event) => {
                 addEvent(event)
+                alert('Event has been added!')
                 console.log(event)
             })
         },
@@ -63,13 +64,17 @@ function EventList({user}) {
       setEvents([...events, event])
     }
 
+    function handleDeleteEvent(deletedEvent) {
+        setEvents(events.filter(event => event.id !== deletedEvent.id))
+    }
+
         
 
     return (
         <div className='list'>
             <h1>Upcoming Events</h1>
             {sortedEvents.map(event => (
-                <EventCard key={event.id} event={event} user={user} />
+                <EventCard key={event.id} event={event} user={user} onDeleteEvent={handleDeleteEvent}/>
             ))}
             <h2>Add Event</h2>
             <form onSubmit={formik.handleSubmit}>
@@ -83,6 +88,7 @@ function EventList({user}) {
               <br></br>
               <label>Image: </label>
               <input type='text' name='image' id='image' value={formik.values.image} onChange={formik.handleChange} />
+              <br></br>
               <br></br>
               <label>Event Venue: </label>
               <input type='text' name='venue' id='venue' value={formik.values.venue} onChange={formik.handleChange} />
