@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './App.css';
 
-function PurchaseCard({purchase, onDeletePurchase}) {
+function PurchaseCard({purchase, onUpdatePurchase}) {
 
     const [number_tickets, setNumber_tickets] = useState(1)
     const [errors, setErrors] = useState([])
@@ -12,7 +12,7 @@ function PurchaseCard({purchase, onDeletePurchase}) {
         })
         .then((r) => {
             if (r.ok) {
-            onDeletePurchase(); // Pass the purchase ID to the handler
+                onUpdatePurchase(); // Pass the purchase ID to the handler
             } else {
                 throw new Error('Network response was not ok.');
             }
@@ -36,7 +36,7 @@ function PurchaseCard({purchase, onDeletePurchase}) {
         .then((r) => {
             if (r.ok) {
                 r.json().then(() => {
-                    onDeletePurchase()
+                    onUpdatePurchase()
                     alert('Your Purchase has been updated!')
                 });
             } else {

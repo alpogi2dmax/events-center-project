@@ -4,15 +4,6 @@ import * as yup from "yup";
 
 function EditProfile({user, onLogin, onLogOut}) {
 
-    const [username, setUsername] = useState(user.username)
-        // const [password, setPassword] = useState(user.password)
-        const [full_name, setFull_name] = useState(user.full_name)
-        const [profile_pic, setProfile_pic] = useState(user.profile_pic)
-        const [address, setAddress] = useState(user.address)
-        const [city, setCity] = useState(user.city)
-        const [state, setState] = useState(user.state)
-        const [errors, setErrors] = useState([])
-
     const formSchema = yup.object().shape({
             username: yup.string().required("Must enter username").min(2).max(15),
             full_name: yup.string().required("Must enter full name"),
@@ -47,36 +38,6 @@ function EditProfile({user, onLogin, onLogOut}) {
                 })
             },
         })
-
-    // function handleSubmit(e) {
-    //     e.preventDefault()
-    //     fetch(`/users/${user.id}`, {
-    //         method: "PATCH",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //         },
-    //         body: JSON.stringify({
-    //             username,
-    //             full_name,
-    //             profile_pic,
-    //             address,
-    //             city,
-    //             state,
-    //         }),
-    //     }).then((r) => {
-    //         if (r.ok) {
-    //             r.json().then((updatedUser) => {
-    //                 onLogin(updatedUser)
-    //                 alert('Your Profile has been updated!')
-    //             });
-    //         } else {
-    //             r.json().then((err) => {
-    //                 console.log(err);
-    //                 setErrors([err.error]);
-    //             }
-    //         )}
-    //     })
-    // }
 
     function handleDelete() {
         fetch(`/users/${user.id}`, {

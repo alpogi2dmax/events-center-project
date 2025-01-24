@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import PurchaseCard from './PurchaseCard';
 import './App.css';
 
-function MyCard({event, onDeletePurchase}) {
+function MyCard({event, onUpdatePurchase}) {
 
     return (
         <div>
@@ -21,7 +21,7 @@ function MyCard({event, onDeletePurchase}) {
                 </div>
                 <div className='box'>
                     {event.purchases.map(purchase => (
-                        <PurchaseCard purchase={purchase} onDeletePurchase={onDeletePurchase}/>
+                        <PurchaseCard purchase={purchase} onUpdatePurchase={onUpdatePurchase}/>
                     ))}
                 </div>
             </div>

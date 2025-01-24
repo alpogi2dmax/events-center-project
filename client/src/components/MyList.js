@@ -23,7 +23,7 @@ function MyList() {
         fetchSessionData();
     }, []);
 
-    function handleDeletePurchase() {
+    function handleUpdatePurchase() {
         // Re-fetch the data to update the state
         fetchSessionData();
     }
@@ -40,7 +40,7 @@ function MyList() {
         <div className='list'>
             <h1>My Events</h1>
             {sortedEvents.map(event => (
-                <MyCard key={event.id} event={event} onDeletePurchase={handleDeletePurchase} />
+                <MyCard key={event.id} event={event} onUpdatePurchase={handleUpdatePurchase} />
             ))}
         </div>
     );
